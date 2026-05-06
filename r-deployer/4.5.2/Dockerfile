@@ -1,6 +1,6 @@
 FROM rocker/r-ver:4.5.2
 
-ARG QUARTO_VERSION="1.6.42"
+ARG QUARTO_VERSION="1.9.37"
 
 RUN apt-get update && apt-get install -y \
     curl \
