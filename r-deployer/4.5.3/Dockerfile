@@ -1,6 +1,10 @@
 FROM rocker/r-ver:4.5.3
 
+ARG QUARTO_VERSION="1.9.37"
+
 RUN apt-get update && apt-get install -y \
+    curl \
+    gdebi-core \
     libcurl4-openssl-dev \
     libssl-dev \
     make \
@@ -24,11 +28,6 @@ RUN apt-get update && apt-get install -y \
     libharfbuzz-dev \
     libudunits2-dev \
     libxml2-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Quarto
-ARG QUARTO_VERSION="1.9.37"
-RUN apt-get update && apt-get install -y gdebi-core \
     && curl -LO "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb" \
     && gdebi --non-interactive "quarto-${QUARTO_VERSION}-linux-amd64.deb" \
     && rm "quarto-${QUARTO_VERSION}-linux-amd64.deb" \
