@@ -23,14 +23,11 @@ jobs:
           - r_version: "4.5.2"
             dockerfile: r-deployer/4.5.2/Dockerfile
             tags: |
-              renejuan/r-deployer:r-ver-4.5.2
               renejuan/r-deployer:4.5.2
           - r_version: "4.5.3"
             dockerfile: r-deployer/4.5.3/Dockerfile
             tags: |
-              renejuan/r-deployer:r-ver-4.5.3
               renejuan/r-deployer:4.5.3
-              renejuan/r-deployer:latest
 
     steps:
       - name: Checkout repository
