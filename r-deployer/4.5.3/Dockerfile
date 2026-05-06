@@ -26,6 +26,14 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Quarto
+ARG QUARTO_VERSION="1.9.37"
+RUN apt-get update && apt-get install -y gdebi-core \
+    && curl -LO "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb" \
+    && gdebi --non-interactive "quarto-${QUARTO_VERSION}-linux-amd64.deb" \
+    && rm "quarto-${QUARTO_VERSION}-linux-amd64.deb" \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org"))' >> /usr/local/lib/R/etc/Rprofile.site
 
 RUN Rscript -e "install.packages('rsconnect')"
