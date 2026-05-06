@@ -2,6 +2,16 @@ FROM rocker/r-ver:4.5.3
 
 ARG QUARTO_VERSION="1.9.37"
 
+# Configure Posit Package Manager for binary R packages (Ubuntu 24.04 Noble)
+RUN echo 'options(\n\
+  repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"),\n\
+  HTTPUserAgent = sprintf(\n\
+    "R/%s R (%s)",\n\
+    getRversion(),\n\
+    paste(getRversion(), R.version["platform"], R.version["arch"], R.version["os"])\n\
+  )\n\
+)' >> /usr/local/lib/R/etc/Rprofile.site
+
 RUN apt-get update && apt-get install -y \
     curl \
     gdebi-core \
@@ -32,8 +42,6 @@ RUN apt-get update && apt-get install -y \
     && gdebi --non-interactive "quarto-${QUARTO_VERSION}-linux-amd64.deb" \
     && rm "quarto-${QUARTO_VERSION}-linux-amd64.deb" \
     && rm -rf /var/lib/apt/lists/*
-
-RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org"))' >> /usr/local/lib/R/etc/Rprofile.site
 
 RUN Rscript -e "install.packages('rsconnect')"
 
